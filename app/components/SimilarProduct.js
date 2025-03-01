@@ -1,25 +1,31 @@
 "use client"
 
-import { BiLoader } from "react-icons/bi"
+import { useEffect, useState } from "react"
 import ProductComp from "./Product"
+import { BiLoader } from 'react-icons/bi'
 
 export default function SimilarProduct(){
-    const products = [
-        {
-          id: 1,
-          title: "Brown Leather Bag",
-          description: "The cover theme for the DEITEL® HOW TO PROGRAM SERIES emphasizes social consciousness issues such as going green, clean energy, recycling, sustainability and more. Within the text, in addition to conventional program- ming exercises, we’ve included our Making a Difference exercise set to raise awareness of issues such as global warming, population growth, affordable healthcare, accessibility, privacy of electronic records and more. In this book, you’ll use Java to program applications that relate to these issues. We hope that what you learn in Java How to Program, 9/e will help you to make a difference.",
-          url: "https://picsum.photos/id/7",
-          price: 3000
-        },
-        {
-          id: 2,
-          title: "School Books",
-          description: "The cover theme for the DEITEL® HOW TO PROGRAM SERIES emphasizes social consciousness issues such as going green, clean energy, recycling, sustainability and more. Within the text, in addition to conventional program- ming exercises, we’ve included our Making a Difference exercise set to raise awareness of issues such as global warming, population growth, affordable healthcare, accessibility, privacy of electronic records and more. In this book, you’ll use Java to program applications that relate to these issues. We hope that what you learn in Java How to Program, 9/e will help you to make a difference.",
-          url: "https://picsum.photos/id/20",
-          price: 1999
+    const [products, setProducts] = useState([])
+
+    const getRandomProducts = async () => {
+        try {
+        const response = await fetch('/api/products/get-random')
+        const result = await response.json()
+
+        if (result) {
+            setProducts(result)
+            return
         }
-      ]
+
+        setProducts([])
+        } catch (error) {
+        console.log(error)
+        alert(error)
+        }
+    }
+
+    useEffect(() => { getRandomProducts() }, [])
+
     return(
         <>
            <div>

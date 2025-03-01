@@ -1,21 +1,34 @@
 "use client"
 
-import SimilarProduct from "@/app/components/SimilarProduct"
-import { useCart } from "@/app/context/cart"
-import MainLayout from "@/app/layouts/MainLayout"
+import MainLayout from "../../layouts/MainLayout"
+import SimilarProduct from "../../components/SimilarProduct"
+import { useEffect, useState } from "react"
+import useIsLoading from "../../hooks/useIsLoading"
+import { useCart } from "../../context/cart"
 import { toast } from "react-toastify"
 
 export default function Product({ params}){
 
     const cart = useCart();    
-    const product = 
-        {
-          id: 1,
-          title: "Brown Leather Bag",
-          description: "The cover theme for the DEITEL® HOW TO PROGRAM SERIES emphasizes social consciousness issues such as going green, clean energy, recycling, sustainability and more. Within the text, in addition to conventional program- ming exercises, we’ve included our Making a Difference exercise set to raise awareness of issues such as global warming, population growth, affordable healthcare, accessibility, privacy of electronic records and more. In this book, you’ll use Java to program applications that relate to these issues. We hope that what you learn in Java How to Program, 9/e will help you to make a difference.",
-          url: "https://picsum.photos/id/7",
-          price: 3000
-        }
+    const [product, setProduct] = useState({})
+
+    const getProduct = async () => {
+        useIsLoading(true)
+        setProduct({})
+
+        const response = await fetch(`/api/product/${params.id}`)
+        const prod = await response.json()
+        setProduct(prod)
+        cart.isItemAddedToCart(prod)
+        useIsLoading(false)
+
+    }
+
+    useEffect(() => { 
+        getProduct() 
+    }, [])
+
+    
     return(
         <>
             <MainLayout>
