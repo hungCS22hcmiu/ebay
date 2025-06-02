@@ -1,4 +1,4 @@
-## Backup project for Web Application course
+## Backup project for Web Application course (now used for OOAD Course)
 reference: https://youtu.be/LtPYuFhYf1w?si=RKdTgfTjW0saFmzk
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
